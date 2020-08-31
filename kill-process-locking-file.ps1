@@ -5,6 +5,9 @@ Thanks to:
 https://devblogs.microsoft.com/scripting/batchman-writes-a-powershell-script-to-automate-handle/
 https://mcpmag.com/articles/2018/07/10/check-for-locked-file-using-powershell.aspx
 
+This script requires the presence of handle.exe in path
+https://docs.microsoft.com/en-us/sysinternals/downloads/handle
+
 #>
 Function Kill-Process-Locking-File {
     [cmdletbinding()]
