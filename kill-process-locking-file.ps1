@@ -1,3 +1,11 @@
+<#
+Powershell script to kill process that is locking a file.
+
+Thanks to:
+https://devblogs.microsoft.com/scripting/batchman-writes-a-powershell-script-to-automate-handle/
+https://mcpmag.com/articles/2018/07/10/check-for-locked-file-using-powershell.aspx
+
+#>
 Function Kill-Process-Locking-File {
     [cmdletbinding()]
     Param (
@@ -20,17 +28,14 @@ Function Kill-Process-Locking-File {
                     $IsLocked = 'AccessDenied'
                 } Catch {
                     $IsLocked = $True
-					Write-Output "is locked"
-					$ScreenOutput = C:\Users\jjacob\handle -a -u "$Item"
-					
-					$abc= $ScreenOutput|SELECT-STRING -pattern 'pid: [\w]*' 
-                    Write-Output $abc
-                   
-                    $ProcessIDIndex=$abc[0].matches[0].Index
-                    $ProcessIDLength=$abc[0].matches[0].Length
-                    $processToKill = $abc[0].tostring().substring($ProcessIDIndex+4,$ProcessIDLength-4)
-
-                    Stop-Process -Id $processToKill                    
+		    Write-Output "is locked"
+		    $ScreenOutput = C:\Users\jjacob\handle -a -u "$Item"
+		    $abc= $ScreenOutput|SELECT-STRING -pattern 'pid: [\w]*' 
+                    
+                    $pidIndex=$abc[0].matches[0].Index
+                    $pidLength=$abc[0].matches[0].Length
+                    $processToKill = $abc[0].tostring().substring($pidIndex+4,$pidLength-4)
+                    Stop-Process -Id $processToKill 
                 }
                 
             }
